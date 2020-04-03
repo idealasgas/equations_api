@@ -38,14 +38,14 @@ class QuadraticEquationSolver
 
   def calculate_roots
     if @D < 0
-      'there are no roots'
+      {roots_amount: 0}
     elsif @D == 0
       root = -@b / 2*@a
-      "root: x = #{root}"
+      {roots_amount: 1, solution: root}
     elsif @D > 0
       root_1 = (-@b + Math.sqrt(@D)) / 2 * @a
       root_2 = (-@b - Math.sqrt(@D)) / 2 * @a
-      "roots: x1 = #{root_1}, x2 = #{root_2}"
+      {roots_amount: 2, solution: [root_1, root_2]}
     end
   end
 end
