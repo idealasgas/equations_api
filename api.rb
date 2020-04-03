@@ -1,8 +1,9 @@
 require 'sinatra'
 require 'sinatra/json'
 require_relative 'quadratic_equation_solver'
+require_relative 'linear_equation_solver'
 
-QUADRATIC_REGEX = /^-?(\d*[\.,])?\d*x\^2([+-](\d*[\.,])?\d*x)?[+-](\d*[\.,])?\d*=0$/
+QUADRATIC_REGEX = /^-?(\d*[\.,])?\d*x\^2([+-](\d*[\.,])?\d*x)?([+-](\d*[\.,])?\d*)?=0$/
 
 post '/' do
   request.body.rewind
