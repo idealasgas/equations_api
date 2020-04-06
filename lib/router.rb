@@ -1,12 +1,18 @@
 require 'dotenv/load'
 require 'sinatra'
 require 'sinatra/json'
+require "sinatra/cors"
 require 'pry'
 require_relative 'solvers/quadratic_equation_solver'
 require_relative 'solvers/linear_equation_solver'
 
 QUADRATIC_REGEX = /^-?(\d*[\.,])?\d*x\^2([+-](\d*[\.,])?\d*x)?([+-](\d*[\.,])?\d*)?=0$/
 LINEAR_REGEX = /^[-]?(\d*)?((\(\d*x[+-]\d*\))|x|\(\d*[+-]\d*x\)|\d.)([=\/+-](\d*)?((\(\d*x[+-]\d*\))|x|\d*|\(\d*[+-]\d*x\)))*$/
+
+set :allow_origin, "*"
+set :allow_methods, "HEAD,POST"
+set :allow_headers, "content-type,if-modified-since"
+set :expose_headers, "location,link"
 
 post '/' do
   request.body.rewind
