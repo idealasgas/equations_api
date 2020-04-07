@@ -9,6 +9,7 @@ class LinearEquationSolver
     Wolfram.appid = ENV['WOLFRAM_API_KEY']
     result = Wolfram.fetch(@equation)
     hash = Wolfram::HashPresenter.new(result).to_hash
-    hash.dig(:pods, "Solution")[0]
+    root = hash.dig(:pods, "Solution")[0].gsub('x = ', '')
+    {roots_amount: 1, solution: [root]}
   end
 end

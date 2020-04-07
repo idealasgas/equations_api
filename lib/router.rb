@@ -20,9 +20,9 @@ post '/' do
   @equation = data["equation"]
 
   if solver.nil?
-    json :error => "this is not equation"
+    json error: true
   else
-    json :roots => solver.solve
+    json({roots: solver.solve, error: false})
   end
 end
 
