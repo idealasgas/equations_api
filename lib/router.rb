@@ -22,7 +22,7 @@ post '/' do
   if solver.nil?
     json error: true
   else
-    json({roots: solver.solve, error: false})
+    json(solver.solve)
   end
 end
 
