@@ -41,7 +41,7 @@ class QuadraticEquationSolver
       {roots_amount: 0}
     elsif @D == 0
       root = -@b / 2*@a
-      {roots_amount: 1, solution: root}
+      {roots_amount: 1, solution: [root]}
     elsif @D > 0
       root_1 = (-@b + Math.sqrt(@D)) / 2 * @a
       root_2 = (-@b - Math.sqrt(@D)) / 2 * @a
