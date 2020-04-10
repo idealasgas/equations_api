@@ -15,7 +15,18 @@ set :allow_methods, "HEAD,POST"
 set :allow_headers, "content-type,if-modified-since,authorization"
 set :expose_headers, "location,link"
 
-before do
+# before do
+#   auth_header = request.env['HTTP_AUTHORIZATION']
+#   if auth_header.nil?
+#     halt 401
+#   else
+#     key = auth_header.gsub('Basic ', '')
+#     halt 401 unless Base64.decode64(key) == ENV['KEY']
+#   end
+# end
+
+post '/' do
+  request.body.rewind
   auth_header = request.env['HTTP_AUTHORIZATION']
   if auth_header.nil?
     halt 401
@@ -23,10 +34,6 @@ before do
     key = auth_header.gsub('Basic ', '')
     halt 401 unless Base64.decode64(key) == ENV['KEY']
   end
-end
-
-post '/' do
-  request.body.rewind
   data = JSON.parse(request.body.read)
   @equation = data["equation"]
 
