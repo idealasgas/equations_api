@@ -2,6 +2,7 @@ require 'dotenv/load'
 require 'sinatra'
 require 'sinatra/json'
 require "sinatra/cors"
+require 'base64'
 require 'pry'
 require_relative 'solvers/quadratic_equation_solver'
 require_relative 'solvers/linear_equation_solver'
@@ -11,8 +12,18 @@ LINEAR_REGEX = /^[-]?(\d*)?((\(\d*x[+-]\d*\))|x|\(\d*[+-]\d*x\)|\d.)([=\/+-](\d*
 
 set :allow_origin, "*"
 set :allow_methods, "HEAD,POST"
-set :allow_headers, "content-type,if-modified-since"
+set :allow_headers, "content-type,if-modified-since,authorization"
 set :expose_headers, "location,link"
+
+before do
+  auth_header = request.env['HTTP_AUTHORIZATION']
+  if auth_header.nil?
+    halt 401
+  else
+    key = auth_header.gsub('Basic ', '')
+    halt 401 unless Base64.decode64(key) == ENV['KEY']
+  end
+end
 
 post '/' do
   request.body.rewind
